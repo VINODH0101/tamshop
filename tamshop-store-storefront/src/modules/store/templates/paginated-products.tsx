@@ -29,64 +29,44 @@ export default async function PaginatedProducts({
   productsIds?: string[]
   countryCode: string
 }) {
-  const queryParams: PaginatedProductsParams = {
-    limit: 12,
-  }
+  const queryParams: PaginatedProductsParams = { limit: PRODUCT_LIMIT }
 
-  if (collectionId) {
-    queryParams["collection_id"] = [collectionId]
-  }
-
-  if (categoryId) {
-    queryParams["category_id"] = [categoryId]
-  }
-
-  if (productsIds) {
-    queryParams["id"] = productsIds
-  }
-
-  if (sortBy === "created_at") {
-    queryParams["order"] = "created_at"
-  }
+  if (collectionId) queryParams.collection_id = [collectionId]
+  if (categoryId) queryParams.category_id = [categoryId]
+  if (productsIds) queryParams.id = productsIds
+  if (sortBy === "created_at") queryParams.order = "created_at"
 
   const region = await getRegion(countryCode)
+  if (!region) return null
 
-  if (!region) {
-    return null
-  }
-
-  let {
+  const {
     response: { products, count },
-  } = await listProductsWithSort({
-    page,
-    queryParams,
-    sortBy,
-    countryCode,
-  })
+  } = await listProductsWithSort({ page, queryParams, sortBy, countryCode })
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 
   return (
-    <>
+    <div className="space-y-8">
       <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"
         data-testid="products-list"
       >
-        {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <ProductPreview product={p} region={region} />
-            </li>
-          )
-        })}
+        {products.map((p) => (
+          <li key={p.id}>
+            <ProductPreview product={p} region={region} />
+          </li>
+        ))}
       </ul>
+
       {totalPages > 1 && (
-        <Pagination
-          data-testid="product-pagination"
-          page={page}
-          totalPages={totalPages}
-        />
+        <div className="mt-6">
+          <Pagination
+            data-testid="product-pagination"
+            page={page}
+            totalPages={totalPages}
+          />
+        </div>
       )}
-    </>
+    </div>
   )
 }

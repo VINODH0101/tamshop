@@ -28,7 +28,7 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full flex items-center transition-all ease-out duration-200 focus:outline-none hover:text-ui-fg-base"
+                  className="relative h-full px-4 flex items-center text-green-900 font-medium hover:text-green-700 transition duration-200"
                 >
                   Menu
                 </Popover.Button>
@@ -37,42 +37,49 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
               <Transition
                 show={open}
                 as={Fragment}
-                enter="transition ease-out duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100 backdrop-blur-2xl"
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 -translate-x-2"
+                enterTo="opacity-100 translate-x-0"
                 leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 backdrop-blur-2xl"
-                leaveTo="opacity-0"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0 -translate-x-2"
               >
-                <PopoverPanel className="flex flex-col absolute w-full pr-4 sm:pr-0 sm:w-1/3 2xl:w-1/4 sm:min-w-min h-[calc(100vh-1rem)] z-30 inset-x-0 text-sm text-ui-fg-on-color m-2 backdrop-blur-2xl">
+                <PopoverPanel className="absolute top-16 left-0 z-50 w-64 sm:w-72 shadow-md bg-green-100 border border-green-200 rounded-xl m-2">
                   <div
                     data-testid="nav-menu-popup"
-                    className="flex flex-col h-full bg-[rgba(3,7,18,0.5)] rounded-rounded justify-between p-6"
+                    className="flex flex-col h-full justify-between p-4"
                   >
-                    <div className="flex justify-end" id="xmark">
-                      <button data-testid="close-menu-button" onClick={close}>
-                        <XMark />
+                    {/* Close Button */}
+                    <div className="flex justify-end mb-2">
+                      <button
+                        onClick={close}
+                        className="text-green-900 hover:text-green-700 transition"
+                        data-testid="close-menu-button"
+                      >
+                        <XMark className="w-5 h-5" />
                       </button>
                     </div>
-                    <ul className="flex flex-col gap-6 items-start justify-start">
-                      {Object.entries(SideMenuItems).map(([name, href]) => {
-                        return (
-                          <li key={name}>
-                            <LocalizedClientLink
-                              href={href}
-                              className="text-3xl leading-10 hover:text-ui-fg-disabled"
-                              onClick={close}
-                              data-testid={`${name.toLowerCase()}-link`}
-                            >
-                              {name}
-                            </LocalizedClientLink>
-                          </li>
-                        )
-                      })}
+
+                    {/* Navigation Links */}
+                    <ul className="flex flex-col gap-4 mt-2 mb-6">
+                      {Object.entries(SideMenuItems).map(([name, href]) => (
+                        <li key={name}>
+                          <LocalizedClientLink
+                            href={href}
+                            onClick={close}
+                            data-testid={`${name.toLowerCase()}-link`}
+                            className="text-base font-medium text-green-900 hover:text-green-700 transition"
+                          >
+                            {name}
+                          </LocalizedClientLink>
+                        </li>
+                      ))}
                     </ul>
-                    <div className="flex flex-col gap-y-6">
+
+                    {/* Country Select & Footer */}
+                    <div className="flex flex-col gap-4 border-t border-green-200 pt-4">
                       <div
-                        className="flex justify-between"
+                        className="flex items-center justify-between"
                         onMouseEnter={toggleState.open}
                         onMouseLeave={toggleState.close}
                       >
@@ -84,12 +91,12 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
                         )}
                         <ArrowRightMini
                           className={clx(
-                            "transition-transform duration-150",
+                            "transition-transform duration-200 text-green-700",
                             toggleState.state ? "-rotate-90" : ""
                           )}
                         />
                       </div>
-                      <Text className="flex justify-between txt-compact-small">
+                      <Text className="text-xs text-green-800 text-center">
                         © {new Date().getFullYear()} Medusa Store. All rights
                         reserved.
                       </Text>

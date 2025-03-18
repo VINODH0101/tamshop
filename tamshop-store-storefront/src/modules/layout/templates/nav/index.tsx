@@ -10,40 +10,42 @@ export default async function Nav() {
   const regions = await listRegions().then((regions: StoreRegion[]) => regions)
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} />
-            </div>
+    <div className="sticky top-0 inset-x-0 z-50 bg-green-100 border-b border-green-300 shadow-sm">
+      <header className="h-16 w-full">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between text-sm text-gray-700">
+          {/* Left: Side Menu */}
+          <div className="flex items-center h-full">
+            <SideMenu regions={regions} />
           </div>
 
+          {/* Center: Logo/Store Link */}
           <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              className="text-lg font-semibold tracking-wide uppercase hover:text-black transition-colors duration-150"
               data-testid="nav-store-link"
             >
-              Medusa Store
+              Tam shop
             </LocalizedClientLink>
           </div>
 
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
+          {/* Right: Links + Cart */}
+          <div className="flex items-center h-full gap-6">
+            <div className="hidden sm:flex items-center gap-6">
               <LocalizedClientLink
-                className="hover:text-ui-fg-base"
                 href="/account"
+                className="hover:text-black transition-colors duration-150"
                 data-testid="nav-account-link"
               >
                 Account
               </LocalizedClientLink>
             </div>
+
             <Suspense
               fallback={
                 <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
                   href="/cart"
+                  className="hover:text-black flex items-center gap-2 transition-colors duration-150"
                   data-testid="nav-cart-link"
                 >
                   Cart (0)

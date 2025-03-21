@@ -1,7 +1,16 @@
 "use client"
 
 import { Popover, PopoverPanel, Transition } from "@headlessui/react"
-import { ArrowRightMini, XMark } from "@medusajs/icons"
+import {
+  ArrowRightMini,
+  BarsThree,
+  ShoppingBag,
+  ShoppingCart,
+  User,
+  XMark,
+} from "@medusajs/icons"
+import { Home } from "lucide-react" // add home icon
+
 import { Text, clx, useToggleState } from "@medusajs/ui"
 import { Fragment } from "react"
 
@@ -10,10 +19,10 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CountrySelect from "../country-select"
 
 const SideMenuItems = {
-  Home: "/",
-  Store: "/store",
-  Account: "/account",
-  Cart: "/cart",
+  Home: { href: "/", icon: <Home className="w-5 h-5 mr-2" /> },
+  Store: { href: "/store", icon: <ShoppingBag className="w-5 h-5 mr-2" /> },
+  Account: { href: "/account", icon: <User className="w-5 h-5 mr-2" /> },
+  Cart: { href: "/cart", icon: <ShoppingCart className="w-5 h-5 mr-2" /> },
 }
 
 const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
@@ -28,8 +37,9 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
               <div className="relative flex h-full">
                 <Popover.Button
                   data-testid="nav-menu-button"
-                  className="relative h-full px-4 flex items-center text-green-900 font-medium hover:text-green-700 transition duration-200"
+                  className="relative h-full px-4 flex items-center gap-2 text-green-900 font-medium hover:text-green-700 transition duration-200"
                 >
+                  <BarsThree className="w-5 h-5" />
                   Menu
                 </Popover.Button>
               </div>
@@ -62,18 +72,21 @@ const SideMenu = ({ regions }: { regions: HttpTypes.StoreRegion[] | null }) => {
 
                     {/* Navigation Links */}
                     <ul className="flex flex-col gap-4 mt-2 mb-6">
-                      {Object.entries(SideMenuItems).map(([name, href]) => (
-                        <li key={name}>
-                          <LocalizedClientLink
-                            href={href}
-                            onClick={close}
-                            data-testid={`${name.toLowerCase()}-link`}
-                            className="text-base font-medium text-green-900 hover:text-green-700 transition"
-                          >
-                            {name}
-                          </LocalizedClientLink>
-                        </li>
-                      ))}
+                      {Object.entries(SideMenuItems).map(
+                        ([name, { href, icon }]) => (
+                          <li key={name}>
+                            <LocalizedClientLink
+                              href={href}
+                              onClick={close}
+                              data-testid={`${name.toLowerCase()}-link`}
+                              className="flex items-center text-base font-medium text-green-900 hover:text-green-700 transition"
+                            >
+                              {icon}
+                              {name}
+                            </LocalizedClientLink>
+                          </li>
+                        )
+                      )}
                     </ul>
 
                     {/* Country Select & Footer */}

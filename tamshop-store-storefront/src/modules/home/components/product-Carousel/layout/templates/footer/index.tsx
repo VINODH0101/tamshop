@@ -3,7 +3,7 @@ import { listCollections } from "@lib/data/collections"
 import { Text } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import MedusaCTA from "@modules/layout/components/medusa-cta"
+import MedusaCTA from "@modules/home/components/product-Carousel/layout/components/medusa-cta"
 
 export default async function Footer() {
   const { collections } = await listCollections({ fields: "*products" })

@@ -1,26 +1,30 @@
-import { Heading } from "@medusajs/ui"
-
-const Hero = () => {
+// components/hero-banner.tsx
+const HeroBanner = () => {
   return (
-    <div className="h-[75vh] w-full border-b  border-ui-border-base relative bg-ui-bg-subtle">
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-32 gap-6">
-        <span>
-          <Heading
-            level="h1"
-            className="text-3xl leading-10 text-ui-fg-base font-normal"
+    <section className="relative w-full h-[70vh] bg-black overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1609332991495-79bc778f7b6e"
+        alt="Hero"
+        className="absolute inset-0 w-full h-full object-cover opacity-70"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/80 flex items-center justify-center text-center px-4">
+        <div className="text-white max-w-2xl">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Welcome to TAM Shop
+          </h1>
+          <p className="text-lg mb-6">
+            Discover watches, sneakers & more in our premium collection.
+          </p>
+          <a
+            href="/store"
+            className="inline-block bg-green-600 hover:bg-green-500 px-6 py-3 rounded-md text-white font-semibold"
           >
-            Ecommerce Starter Template
-          </Heading>
-          <Heading
-            level="h2"
-            className="text-3xl leading-10 text-ui-fg-subtle font-normal"
-          >
-            Powered by Medusa and Next.js
-          </Heading>
-        </span>
+            Shop Now
+          </a>
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
-export default Hero
+export default HeroBanner

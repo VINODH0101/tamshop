@@ -1,13 +1,14 @@
 import { Suspense } from "react"
 
 import { listRegions } from "@lib/data/regions"
+import { ShoppingCart, User } from "@medusajs/icons"
 import { StoreRegion } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/home/components/product-Carousel/layout/components/cart-button"
 import SideMenu from "@modules/home/components/product-Carousel/layout/components/side-menu"
 
 export default async function Nav() {
-  const regions = await listRegions().then((regions: StoreRegion[]) => regions)
+  const regions: StoreRegion[] = await listRegions()
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 bg-green-100 border-b border-green-300 shadow-sm">
@@ -29,15 +30,16 @@ export default async function Nav() {
             </LocalizedClientLink>
           </div>
 
-          {/* Right: Links + Cart */}
+          {/* Right: Account + Cart */}
           <div className="flex items-center h-full gap-6">
-            <div className="hidden sm:flex items-center gap-6">
+            <div className="hidden sm:flex items-center">
               <LocalizedClientLink
                 href="/account"
-                className="hover:text-black transition-colors duration-150"
+                className="flex items-center hover:text-black transition-colors duration-150"
                 data-testid="nav-account-link"
               >
-                Account
+                <User className="w-5 h-5" aria-hidden="true" />
+                <span>Account</span>
               </LocalizedClientLink>
             </div>
 
@@ -45,10 +47,11 @@ export default async function Nav() {
               fallback={
                 <LocalizedClientLink
                   href="/cart"
-                  className="hover:text-black flex items-center gap-2 transition-colors duration-150"
+                  className="flex items-center hover:text-black gap-2 transition-colors duration-150"
                   data-testid="nav-cart-link"
                 >
-                  Cart (0)
+                  <ShoppingCart className="w-5 h-5" aria-hidden="true" />
+                  <span>Cart (0)</span>
                 </LocalizedClientLink>
               }
             >

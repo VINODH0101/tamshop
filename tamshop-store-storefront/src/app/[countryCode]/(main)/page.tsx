@@ -26,7 +26,7 @@ export default async function Home(props: {
   return (
     <>
       <HeroBanner />
-      <ProductCarousel />
+      {/* <ProductCarousel /> */}
       <CategoryGrid />
       <div className="py-12">
         <FeaturedProducts collections={collections} region={region} />
